@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import Provider from './util/Provider';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// util
+import { GetTheme } from './util/Theme';
+
+// pages
+import Home from './page/Home';
+
+const App = () => {
+    const [ theme, setTheme ] = useState('Dark');
+
+    // executado sempre que render for ser executado ou no willunmount
+    useEffect(() => {
+        console.log('Render Run');
+        return () => { console.log('destroy?'); }
+    }, []);
+
+    useEffect(() => {
+        console.log(theme);
+    }, [theme])
+
+    return (
+        <Provider theme={theme} setTheme={setTheme}>
+            {GetTheme(theme)}
+            <Home />
+        </Provider>
+    )
 }
 
 export default App;
